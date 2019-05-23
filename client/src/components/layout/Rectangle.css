@@ -1,0 +1,49 @@
+.rectangle {
+    margin: 25px 0px 25px 0px;
+    padding: 25px;
+    background-color: #D8D8D8;
+    border: 1px solid #979797;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+  }
+  .rectangle-component {
+    text-align: center;
+    margin: auto;
+  }
+
+  .rectangle-active {
+    background-color: #00ccff;
+  }
+  .rectangle-done {
+      background-color: #00ff00
+  }
+  .line {
+    border: 2px solid #979797;
+  }
+  .svg{
+    width: 30px;
+    height: 30px;
+  }
+
+  .circle {
+    margin: 25px 0px 25px 0px;
+    padding: 25px;
+    background-color: #00ccff;
+    border: 1px solid #979797;
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  .circle-component {
+    text-align: center;
+    margin: auto;
+  }
+
+  .circle-active {
+    background-color: #00ccff;
+  }
+  .circle-done {
+      background-color: #00ff00
+  }
+
