@@ -46,10 +46,10 @@ class EndPage extends Component {
                             <p className="lead text-center">
                                 {
                                     this.props.submit.disableAnimalRegistration &&
-                                        this.props.submit.disableAnimalRegistration &&
-                                        this.props.submit.disableAnimalRegistration &&
-                                        this.props.submit.disableAnimalRegistration &&
-                                        this.props.submit.disableAnimalRegistration ?
+                                        this.props.submit.disableAnimalInsemination &&
+                                        this.props.submit.disableCalfRegister &&
+                                        this.props.submit.disableCalvingRegister &&
+                                        this.props.submit.disableMilkRecordingRegister ?
                                         (<span>Success</span>) :
                                         (<span>Please submit all Forms</span>)
                                 }

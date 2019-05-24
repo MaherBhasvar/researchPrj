@@ -154,7 +154,7 @@ class AnimalRegistration extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Animal Registration Form</h1>
+                            <h3 className="display-6 text-center">Animal Registration Form</h3>
                             <p className="lead text-center">1st Form</p>
                             <div className="card">
                                 <form onSubmit={e => this.onSubmit(e)}>

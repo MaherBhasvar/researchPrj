@@ -1,15 +1,14 @@
 .rectangle {
-    margin: 25px 0px 25px 0px;
-    padding: 25px;
+    
+    padding: 8px;
     background-color: #D8D8D8;
     border: 1px solid #979797;
     border-radius: 5px;
-    width: 30px;
-    height: 30px;
+
   }
   .rectangle-component {
     text-align: center;
-    margin: auto;
+    margin: 20px 0px 20px 0px;
   }
 
   .rectangle-active {
@@ -22,22 +21,25 @@
     border: 2px solid #979797;
   }
   .svg{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
   .circle {
-    margin: 25px 0px 25px 0px;
-    padding: 25px;
+    
+    padding: 5px;
     background-color: #00ccff;
     border: 1px solid #979797;
-    border-radius: 30px;
-    width: 30px;
-    height: 30px;
+    border-radius: 40px;
+
   }
   .circle-component {
     text-align: center;
     margin: auto;
+  }
+
+  .text {
+    padding: 20px;
   }
 
   .circle-active {
