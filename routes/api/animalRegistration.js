@@ -42,21 +42,30 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     if (!isValid) {
         return res.status(400).json(errors);
     }
+
     console.log("*****************************this is request.user object", req.user);
     console.log("*****************************this is request.user object");
     const newAnimalRegistration = new AnimalRegistration({
-        Centre: req.body.Centre,
-        FarmerName: req.body.FarmerName,
-        MobileNo: req.body.MobileNo,
-        Village: req.body.Village,
+        // Centre: req.body.Centre,
+        // FarmerName: req.body.FarmerName,
+        // MobileNo: req.body.MobileNo,
+        // Village: req.body.Village,
         CowTagNo: req.body.CowTagNo,
+        Gender: req.body.Gender,
+        Species: req.body.Species,
+        Breed: req.body.Breed,
         Age: req.body.Age,
         DateOfBirth: req.body.DateOfBirth,
-        Sire: req.body.Sire,
-        Dam: req.body.Dam,
-        SurveyPickYield: req.body.SurveyPickYield,
-        MDPH: req.body.MDPH,
-        LactationNo: req.body.LactationNo,
+
+        ReceiptNumber: req.body.ReceiptNumber,
+        RegistrationCharges: req.body.RegistrationCharges,
+        BloodLevel: req.body.BloodLevel,
+        SireID: req.body.SireID,
+        SireSireID: req.body.SireSireID,
+        DamID: req.body.DamID,
+        // SurveyPickYield: req.body.SurveyPickYield,
+        // MDPH: req.body.MDPH,
+        // LactationNo: req.body.LactationNo,
     });
 
     console.log(newAnimalRegistration)

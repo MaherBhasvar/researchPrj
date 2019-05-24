@@ -11,23 +11,35 @@ const AnimalRegistrationSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  Centre: {
-    type: String,
-    required: true,
-  },
-  FarmerName: {
-    type: String,
-    required: true,
-  },
-  MobileNo: {
-    type: Number,
-  },
-  Village: {
+  // Centre: {
+  //   type: String,
+  //   required: true,
+  // },
+  // FarmerName: {
+  //   type: String,
+  //   required: true,
+  // },
+  // MobileNo: {
+  //   type: Number,
+  // },
+  // Village: {
+  //   type: String,
+  //   required: true
+  // },
+  CowTagNo: {
     type: String,
     required: true
   },
-  CowTagNo: {
+  Gender: {
     type: String,
+    required: true
+  },
+  Species: {
+    type: String,
+    required: true
+  },
+  Breed: {
+    type: [String],
     required: true
   },
   Age: {
@@ -37,26 +49,42 @@ const AnimalRegistrationSchema = new Schema({
   DateOfBirth: {
     type: Date,
   },
-  Sire: {
+  BloodLevel: {
     type: String,
     required: true
   },
-  Dam: {
+  RegistrationCharges: {
     type: String,
     required: true
   },
-  SurveyPickYield: {
-    type: Number,
-    required: true
-  },
-  MDPH: {
+  ReceiptNumber: {
     type: String,
     required: true
   },
-  LactationNo: {
+  SireID: {
     type: String,
     required: true
   },
+  SireSireID: {
+    type: String,
+    required: true
+  },
+  DamID: {
+    type: String,
+    required: true
+  },
+  // SurveyPickYield: {
+  //   type: Number,
+  //   required: true
+  // },
+  // MDPH: {
+  //   type: String,
+  //   required: true
+  // },
+  // LactationNo: {
+  //   type: String,
+  //   required: true
+  // },
 });
 
 module.exports = AnimalRegistration = mongoose.model('animalRegistration', AnimalRegistrationSchema);

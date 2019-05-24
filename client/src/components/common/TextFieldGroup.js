@@ -16,8 +16,10 @@ const TextFieldGroup = ({
   disabled
 }) => {
   return (
-    <div className="form-group card-header">
+    <div className="form-group card-header" style={{ textAlign: 'left' }}>
+
       <label >{label}</label>
+
       <input
         //className="input"
         type={type}
@@ -35,7 +37,7 @@ const TextFieldGroup = ({
 
       {info && <small className="form-text text-muted">{info}</small>}
       {error && (
-        <div className="invalid-feedback">{error}</div>
+        <div className="alert alert-danger" role="alert">{error}</div>
       )}
     </div>
   );
