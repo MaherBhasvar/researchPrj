@@ -373,6 +373,12 @@ class AnimalRegistration extends Component {
                                         onChange={e => this.onChange(e)}
                                         error={errors.DamID}
                                     />
+                                    {errors.CowTagNo && (<div className="alert alert-danger" role="alert">
+                                        {errors.CowTagNo}
+                                    </div>)}
+                                    {errors.Breed && (<div className="alert alert-danger" role="alert">
+                                        {errors.Breed}
+                                    </div>)}
                                     <input type="submit" className="btn btn-info btn-block mt-4" disabled={this.props.submit.disableAnimalRegistration} />
 
                                 </form>
