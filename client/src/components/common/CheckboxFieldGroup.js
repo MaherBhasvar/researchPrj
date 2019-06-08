@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import TextFieldGroup from './TextFieldGroup';
+
+
 
 const CheckboxFieldGroup = ({
     name,
@@ -9,6 +12,8 @@ const CheckboxFieldGroup = ({
     info,
     onChange,
     options,
+    optionBreed,
+    addCustomBreed,
 }) => {
     const selectOptions = options.map(option => (
         <div key={option.label} className="col-sm" style={{ textAlign: 'left' }}>
@@ -37,9 +42,11 @@ const CheckboxFieldGroup = ({
                     </label>
                 </div>
                 <div className="col-6" style={{ textAlign: 'left' }}>
+                    <button onClick={addCustomBreed} disabled={optionBreed}>Add Breed</button>
                     {selectOptions}
                 </div>
                 {info && <small className="form-text text-muted">{info}</small>}
+
 
 
             </div>

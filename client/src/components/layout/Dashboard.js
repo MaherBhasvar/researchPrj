@@ -3,7 +3,12 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getAnimalRegistration } from '../../actions/submitActions';
 import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+
+import {
+  JsonToExcel
+} from 'react-json-excel';
+
 
 // import usersData from './UsersData'
 
@@ -54,8 +59,49 @@ class Dashboard extends Component {
 
     console.log(typeof this.props.submit.animalRegistrationData);
 
+
     let displayData;
+    let displayData2;
     if (userList !== null) {
+      const className = 'class-name-for-style',
+        filename = 'Excel-file',
+        fields = {
+          "DateOfEntry": "DateOfEntry",
+          "CowTagNo": "CowTagNo",
+          "Gender": "Gender",
+          "Species": "Species",
+
+          "Age": "Age",
+          "DateOfBirth": "DateOfBirth",
+          "BloodLevel": "BloodLevel",
+          "RegistrationCharges": "RegistrationCharges",
+          "ReceiptNumber": "ReceiptNumber",
+          "SireID": "SireID",
+          "SireSireID": "SireSireID",
+          "DamID": "DamID",
+          "Breed": "Breed",
+        },
+        style = {
+          padding: "5px"
+        },
+        data = userList.map(eachElement => {
+          console.log(eachElement.Breed.toString())
+          return {
+            DateOfEntry: eachElement.DateOfEntry,
+            CowTagNo: eachElement.CowTagNo,
+            Gender: eachElement.Gender,
+            Species: eachElement.Species,
+            Breed: eachElement.Breed,
+            Age: eachElement.Age,
+            DateOfBirth: eachElement.DateOfBirth,
+            BloodLevel: eachElement.BloodLevel,
+            ReceiptNumber: eachElement.ReceiptNumber,
+            RegistrationCharges: eachElement.RegistrationCharges,
+            SireID: eachElement.SireID,
+            SireSireID: eachElement.CowTagNo,
+            DamID: eachElement.DamID,
+          }
+        });
       displayData = (
         <tbody>
           {
@@ -73,6 +119,9 @@ class Dashboard extends Component {
                 <td >{user.Breed.toString()}</td>
                 <td >{user.Age}</td>
                 <td >{user.DateOfBirth}</td>
+                <td >{user.BloodLevel}</td>
+                <td >{user.RegistrationCharges}</td>
+                <td >{user.ReceiptNumber}</td>
                 <td >{user.SireID}</td>
                 <td >{user.SireSireID}</td>
                 <td >{user.DamID}</td>
@@ -84,6 +133,17 @@ class Dashboard extends Component {
           }
         </tbody>
       );
+      displayData2 = (
+        <JsonToExcel
+          data={data}
+          className={className}
+          filename={filename}
+          fields={fields}
+          style={style}
+        />
+      )
+
+
     }
     return (
       <div className="animated fadeIn">
@@ -109,6 +169,9 @@ class Dashboard extends Component {
                       <th scope="col">Breed</th>
                       <th scope="col">Age</th>
                       <th scope="col">Date Of Birth</th>
+                      <th scope="col">Blood Level</th>
+                      <th scope="col">Registration Charges</th>
+                      <th scope="col">Receipt Number</th>
                       <th scope="col">SireID</th>
                       <th scope="col">SireSireID</th>
                       <th scope="col">DamID</th>
@@ -120,11 +183,13 @@ class Dashboard extends Component {
 
                   {displayData}
 
+
                 </Table>
               </CardBody>
             </Card>
           </Col>
         </Row>
+        {displayData2}
       </div>
     )
   }

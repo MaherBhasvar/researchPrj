@@ -27,9 +27,43 @@ class AnimalRegistration extends Component {
         BloodLevel: 'test',
         ReceiptNumber: 'test',
         RegistrationCharges: 'test',
+        optionBreed: true,
+        optionBreedName: 'test',
         // SurveyPickYield: '3',
         // MDPH: 'test',
         // LactationNo: 'test',
+        optionGender: [
+            { label: "Female", value: "Female", checked: true },
+            { label: "Male", value: "Male", checked: false }
+        ],
+        optionSpecies: [
+            { label: "Cattle", value: "Cattle", checked: true },
+            { label: "Buffalo", value: "Buffalo", checked: false }
+        ],
+        optionBreedCattle: [
+            { label: "Jersey", value: "Jersey", checked: false },
+            { label: "Dangi", value: "Dangi", checked: false },
+            { label: "Bargur", value: "Bargur", checked: false },
+            { label: "HF", value: "HF", checked: false },
+            { label: "Amritmahal", value: "Amritmahal", checked: false },
+            { label: "Bachur", value: "Bachur", checked: false },
+            { label: "Deoni", value: "Deoni", checked: false },
+            { label: "Gaolao", value: "Gaolao", checked: false },
+            { label: "Hallikar", value: "Hallikar", checked: false },
+            { label: "Gir", value: "Gir", checked: false }
+        ],
+        optionBreedBuffalo: [
+            { label: "Bhadwan", value: "Bhadwan", checked: false },
+            { label: "Jaffarabadi", value: "Jaffarabadi", checked: false },
+            { label: "Marathawada", value: "Marathawada", checked: false },
+            { label: "Mehsana", value: "Mehsana", checked: false },
+            { label: "Murrah", value: "Murrah", checked: false },
+            { label: "Nagpuri", value: "Nagpuri", checked: false },
+            { label: "Nili-Ravi", value: "Nili-Ravi", checked: false },
+            { label: "Pandharpuri", value: "Pandharpuri", checked: false },
+            { label: "Surti", value: "Surti", checked: false },
+            { label: "Toda", value: "Toda", checked: false }
+        ],
         errors: {},
     };
 
@@ -44,7 +78,50 @@ class AnimalRegistration extends Component {
             this.setState({ errors: nextProps.errors });
         }
     }
+    //add or remove custom Breed
+    async addCustomBreed(e) {
+        e.preventDefault();
+        const optionBreedName = prompt('Add Custom Breed')
 
+        //optionBreed has to be true hence to allow adding custom breed
+        if (optionBreedName && this.state.optionBreed) {
+            await this.setState({ optionBreedName: optionBreedName.toString() })
+            await this.setState({ optionBreed: false })
+            await this.setState(prevState => {
+                if (this.state.Species === 'Cattle') {
+                    const newObj = {
+                        label: optionBreedName,
+                        value: optionBreedName,
+                        checked: true,
+                    }
+                    const newObj2 = {
+                        Breed: prevState.Breed.splice(0, 0, optionBreedName),
+                        optionBreedCattle: prevState.optionBreedCattle.splice(0, 0, newObj)
+                    }
+                    return {
+                        ...prevState,
+                    }
+                } else {
+                    const newObj = {
+                        label: optionBreedName,
+                        value: optionBreedName,
+                        checked: true,
+                    }
+                    const newObj2 = {
+                        Breed: prevState.Breed.splice(0, 0, optionBreedName),
+                        optionBreedBuffalo: prevState.optionBreedBuffalo.splice(0, 0, newObj)
+                    }
+                    return {
+                        ...prevState,
+                    }
+                }
+            })
+            console.log(typeof this.state.optionBreedName)
+            console.log(this.state)
+        }
+    };
+
+    //onChange Event handlers
     async onChange(e) {
         if (e.target.type === 'checkbox') {
             console.log("target name", e.target.name)
@@ -53,6 +130,8 @@ class AnimalRegistration extends Component {
             const j = e.target.name;
             const i = this.state[e.target.name].indexOf(e.target.value)
             console.log("i", i)
+
+            //if Breed is already checked
             if (i > -1) {
                 this.setState(prevState => {
 
@@ -61,10 +140,35 @@ class AnimalRegistration extends Component {
                         [j]: prevState[j].splice(i, 1)
                     };
                     console.log("new Obj", newObj);
-                    return { ...prevState };
+                    if (this.state.Species === 'Cattle') {
+                        return {
+                            ...prevState,
+                            optionBreedCattle: prevState.optionBreedCattle.map(eachElement => {
+                                if (eachElement.label === k) {
+                                    eachElement.checked = false;
+                                }
+                                return eachElement
+                            }
+                            )
+                        };
+                    } else {
+                        return {
+                            ...prevState,
+                            optionBreedBuffalo: prevState.optionBreedBuffalo.map(eachElement => {
+                                if (eachElement.label === k) {
+                                    eachElement.checked = false;
+                                }
+                                return eachElement
+                            }
+                            )
+                        };
+                    }
+
 
                 });
-            } else {
+            }
+            //Breed is unchecked
+            else {
                 await this.setState(prevState => {
                     console.log("target name", j)
                     console.log("target value", k)
@@ -74,28 +178,98 @@ class AnimalRegistration extends Component {
                         [j]: prevState[j].splice(0, 0, k)
                     }
                     console.log("new obj", prevState);
-                    return { ...prevState }
+                    if (this.state.Species === 'Cattle') {
+                        return {
+                            ...prevState,
+                            optionBreedCattle: prevState.optionBreedCattle.map(eachElement => {
+                                if (eachElement.label === k) {
+                                    eachElement.checked = true;
+                                }
+                                return eachElement
+                            }
+                            )
+                        };
+                    } else {
+                        return {
+                            ...prevState,
+                            optionBreedBuffalo: prevState.optionBreedBuffalo.map(eachElement => {
+                                if (eachElement.label === k) {
+                                    eachElement.checked = true;
+                                }
+                                return eachElement
+                            }
+                            )
+                        };
+                    }
                 })
                 console.log("new state", this.state)
             }
         }
+        // Species Radio Button
         else if (e.target.name === 'Species') {
-            await this.setState({
-                [e.target.name]: e.target.value,
-                Breed: []
+            const k = e.target.value;
+            const j = e.target.name;
+            const i = this.state[e.target.name].indexOf(e.target.value)
+            await this.setState(prevstate => {
+                return {
+                    ...prevstate,
+                    [j]: k,
+                    optionSpecies: prevstate.optionSpecies.map(eachElement => {
+                        if (eachElement.label === k) {
+                            eachElement.checked = true;
+                        } else {
+                            eachElement.checked = false;
+                        }
+                        return eachElement
+                    }),
+                    Breed: [],
+                    optionBreed: true,
+                    optionBreedName: ''
+                }
+            });
+        }
+        //Gender Radio Button
+        else if (e.target.name === 'Gender') {
+            const k = e.target.value;
+            const j = e.target.name;
+            const i = this.state[e.target.name].indexOf(e.target.value)
+            await this.setState(prevstate => {
+                return {
+                    ...prevstate,
+                    [j]: k,
+                    optionGender: prevstate.optionGender.map(eachElement => {
+                        if (eachElement.label === k) {
+                            eachElement.checked = true;
+                        } else {
+                            eachElement.checked = false;
+                        }
+                        return eachElement
+                    }),
+
+                }
             });
         }
         else {
             this.setState({ [e.target.name]: e.target.value });
         }
-
     }
 
     onSubmit(e) {
         e.preventDefault();
 
         const userData = {
-            ...this.state,
+            CowTagNo: this.state.CowTagNo,
+            Age: this.state.Age,
+            DateOfBirth: this.state.DateOfBirth,
+            SireID: this.state.SireID,
+            SireSireID: this.state.SireSireID,
+            DamID: this.state.DamID,
+            Gender: this.state.Gender,
+            Species: this.state.Species,
+            Breed: this.state.Breed.toString(),
+            BloodLevel: this.state.BloodLevel,
+            ReceiptNumber: this.state.ReceiptNumber,
+            RegistrationCharges: this.state.RegistrationCharges,
         };
         this.props.animalRegistration(userData, this.props.history);
 
@@ -115,39 +289,11 @@ class AnimalRegistration extends Component {
         const { errors } = this.state;
         console.log("state on rerender", this.state);
 
-        const optionGender = [
-            { label: "Female", value: "Female", checked: this.state.Gender === "Female" },
-            { label: "Male", value: "Male", checked: this.state.Gender === "Male" }
-        ];
-        const optionSpecies = [
-            { label: "Cattle", value: "Cattle", checked: this.state.Species === "Cattle" },
-            { label: "Buffalo", value: "Buffalo", checked: this.state.Species === "Buffalo" }
-        ];
-        const optionBreedCattle = [
-            { label: "Jersey", value: "Jersey", checked: this.state.Breed.indexOf("Jersey") > -1 },
-            { label: "Dangi", value: "Dangi", checked: this.state.Breed.indexOf("Dangi") > -1 },
-            { label: "Bargur", value: "Bargur", checked: this.state.Breed.indexOf("Bargur") > -1 },
-            { label: "HF", value: "HF", checked: this.state.Breed.indexOf("HF") > -1 },
-            { label: "Amritmahal", value: "Amritmahal", checked: this.state.Breed.indexOf("Amritmahal") > -1 },
-            { label: "Bachur", value: "Bachur", checked: this.state.Breed.indexOf("Bachur") > -1 },
-            { label: "Deoni", value: "Deoni", checked: this.state.Breed.indexOf("Deoni") > -1 },
-            { label: "Gaolao", value: "Gaolao", checked: this.state.Breed.indexOf("Gaolao") > -1 },
-            { label: "Hallikar", value: "Hallikar", checked: this.state.Breed.indexOf("Hallikar") > -1 },
-            { label: "Gir", value: "Gir", checked: this.state.Breed.indexOf("Gir") > -1 }
-        ];
+        const optionGender = this.state.optionGender
+        const optionSpecies = this.state.optionSpecies
+        const optionBreedCattle = this.state.optionBreedCattle
 
-        const optionBreedBuffalo = [
-            { label: "Bhadwan", value: "Bhadwan", checked: this.state.Breed.indexOf("Bhadwan") > -1 },
-            { label: "Jaffarabadi", value: "Jaffarabadi", checked: this.state.Breed.indexOf("Jaffarabadi") > -1 },
-            { label: "Marathawada", value: "Marathawada", checked: this.state.Breed.indexOf("Marathawada") > -1 },
-            { label: "Mehsana", value: "Mehsana", checked: this.state.Breed.indexOf("Mehsana") > -1 },
-            { label: "Murrah", value: "Murrah", checked: this.state.Breed.indexOf("Murrah") > -1 },
-            { label: "Nagpuri", value: "Nagpuri", checked: this.state.Breed.indexOf("Nagpuri") > -1 },
-            { label: "Nili-Ravi", value: "Nili-Ravi", checked: this.state.Breed.indexOf("Nili-Ravi") > -1 },
-            { label: "Pandharpuri", value: "Pandharpuri", checked: this.state.Breed.indexOf("Pandharpuri") > -1 },
-            { label: "Surti", value: "Surti", checked: this.state.Breed.indexOf("Surti") > -1 },
-            { label: "Toda", value: "Toda", checked: this.state.Breed.indexOf("Toda") > -1 }
-        ];
+        const optionBreedBuffalo = this.state.optionBreedBuffalo
 
         return (
             <div className="AnimalRegistration">
@@ -157,7 +303,7 @@ class AnimalRegistration extends Component {
                             <h3 className="display-6 text-center">Animal Registration Form</h3>
                             <p className="lead text-center">1st Form</p>
                             <div className="card">
-                                <form onSubmit={e => this.onSubmit(e)}>
+                                <form >
                                     {/* <TextFieldGroup
                                         disabled={this.props.submit.disableAnimalRegistration}
                                         label="Centre Name (કેન્દ્રનુ નામ) :"
@@ -220,7 +366,7 @@ class AnimalRegistration extends Component {
                                         type="text"
                                         value={this.state.Gender}
                                         onChange={e => this.onChange(e)}
-                                        options={optionGender}
+                                        options={this.state.optionGender}
                                         error={errors.Gender}
                                     />
                                     <RadioFieldGroup
@@ -230,7 +376,7 @@ class AnimalRegistration extends Component {
                                         name="Species"
                                         type="text"
                                         value={this.state.Species}
-                                        options={optionSpecies}
+                                        options={this.state.optionSpecies}
                                         onChange={e => this.onChange(e)}
                                         error={errors.Species}
                                     />
@@ -243,7 +389,9 @@ class AnimalRegistration extends Component {
                                             type="text"
                                             value={this.state.Breed}
                                             onChange={e => this.onChange(e)}
-                                            options={optionBreedCattle}
+                                            options={this.state.optionBreedCattle}
+                                            optionBreed={!this.state.optionBreed}
+                                            addCustomBreed={e => this.addCustomBreed(e)}
                                             error={errors.Breed}
                                         />
                                     ) : (
@@ -255,7 +403,9 @@ class AnimalRegistration extends Component {
                                                 type="text"
                                                 value={this.state.Breed}
                                                 onChange={e => this.onChange(e)}
-                                                options={optionBreedBuffalo}
+                                                options={this.state.optionBreedBuffalo}
+                                                optionBreed={!this.state.optionBreed}
+                                                addCustomBreed={e => this.addCustomBreed(e)}
                                                 error={errors.Breed}
                                             />
                                         )}
@@ -376,10 +526,45 @@ class AnimalRegistration extends Component {
                                     {errors.CowTagNo && (<div className="alert alert-danger" role="alert">
                                         {errors.CowTagNo}
                                     </div>)}
+                                    {errors.Gender && (<div className="alert alert-danger" role="alert">
+                                        {errors.Gender}
+                                    </div>)}
+                                    {errors.Species && (<div className="alert alert-danger" role="alert">
+                                        {errors.Species}
+                                    </div>)}
+
                                     {errors.Breed && (<div className="alert alert-danger" role="alert">
                                         {errors.Breed}
                                     </div>)}
-                                    <input type="submit" className="btn btn-info btn-block mt-4" disabled={this.props.submit.disableAnimalRegistration} />
+                                    {errors.SireID && (<div className="alert alert-danger" role="alert">
+                                        {errors.SireID}
+                                    </div>)}
+                                    {errors.SireSireID && (<div className="alert alert-danger" role="alert">
+                                        {errors.SireSireID}
+                                    </div>)}
+                                    {errors.DamID && (<div className="alert alert-danger" role="alert">
+                                        {errors.DamID}
+                                    </div>)}
+                                    {errors.SireID && (<div className="alert alert-danger" role="alert">
+                                        {errors.SireID}
+                                    </div>)}
+
+                                    {errors.Age && (<div className="alert alert-danger" role="alert">
+                                        {errors.Age}
+                                    </div>)}
+                                    {errors.DateOfBirth && (<div className="alert alert-danger" role="alert">
+                                        {errors.DateOfBirth}
+                                    </div>)}
+                                    {errors.BloodLevel && (<div className="alert alert-danger" role="alert">
+                                        {errors.BloodLevel}
+                                    </div>)}
+                                    {errors.RegistrationCharges && (<div className="alert alert-danger" role="alert">
+                                        {errors.RegistrationCharges}
+                                    </div>)}
+                                    {errors.ReceiptNumber && (<div className="alert alert-danger" role="alert">
+                                        {errors.ReceiptNumber}
+                                    </div>)}
+                                    <input type="submit" className="btn btn-info btn-block mt-4" disabled={this.props.submit.disableAnimalRegistration} onClick={e => this.onSubmit(e)} />
 
                                 </form>
                             </div>
