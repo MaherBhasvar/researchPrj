@@ -23,3 +23,4 @@ export const MRR = 'MRR';
 
 export const CURRENT_POSITION = 'CURRENT_POSITION';
 export const CLEAR_GLOBAL_SUBMIT = 'CLEAR_GLOBAL_SUBMIT';
+export const DASHBOARD_EXCEL = 'DASHBOARD_EXCEL'

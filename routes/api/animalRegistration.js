@@ -30,7 +30,6 @@ router.get('/dashboard', passport.authenticate('jwt', { session: false }), (req,
 
 
 
-
 //@route        POST api/animalRegistration
 //@description  Post data
 //@access       Private

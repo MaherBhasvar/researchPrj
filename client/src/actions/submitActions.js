@@ -6,7 +6,7 @@ import {
     LOCK_CLR, CLR, DELETE_CLR,
     LOCK_MRR, MRR, DELETE_MRR,
     CLEAR_GLOBAL_SUBMIT,
-
+    DASHBOARD_EXCEL,
 } from './types';
 
 // ***************************************************************************************
@@ -157,6 +157,23 @@ export const getAnimalRegistration = () => dispatch => {
         .then(res => {
             dispatch({
                 type: AR,
+                payload: res.data,
+            })
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        )
+}
+
+export const getExcelData = () => dispatch => {
+    axios.get('/api/dashboardExcel/show')
+        .then(res => {
+            console.log("dispatched", res.data)
+            dispatch({
+                type: DASHBOARD_EXCEL,
                 payload: res.data,
             })
         })

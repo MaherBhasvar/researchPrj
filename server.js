@@ -9,6 +9,8 @@ const animalInsemination = require('./routes/api/animalInsemination')
 const calvingRegister = require('./routes/api/calvingRegister')
 const milkRecordingRegister = require('./routes/api/milkRecordingRegister')
 const calfRegister = require('./routes/api/calfRegister');
+
+const dashboardExcel = require('./routes/api/dashboardExcel');
 const currentPosition = require('./routes/api/currentPosition')
 const app = express();
 
@@ -41,6 +43,7 @@ app.use('/api/animalInsemination', animalInsemination);
 app.use('/api/calvingRegister', calvingRegister);
 app.use('/api/milkRecordingRegister', milkRecordingRegister);
 app.use('/api/calfRegister', calfRegister);
+app.use('/api/dashboardExcel', dashboardExcel);
 app.use('/api/current', currentPosition);
 //const port = process.env.PORT || 5000; 
 //process.env.PORT for Heroku

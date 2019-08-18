@@ -17,6 +17,7 @@ import Login from './components/auth/Login';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Dashboard from './components/layout/Dashboard';
+import DashboardExcel from './components/layout/DashboardExcel'
 import Rectangle from './components/layout/Rectangle';
 
 import AnimalRegistration from './components/forms/AnimalRegistration';
@@ -77,6 +78,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/dashboardExcel" component={DashboardExcel} />
             </Switch>
             <Switch>
               <PrivateRoute exact path="/start" component={StartPage} />
