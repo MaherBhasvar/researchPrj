@@ -7,6 +7,7 @@ import {
     LOCK_MRR, MRR, DELETE_MRR,
     CLEAR_GLOBAL_SUBMIT,
     DASHBOARD_EXCEL,
+    STOP_DASHBOARD_EXCEL,
 } from './types';
 
 // ***************************************************************************************
@@ -168,14 +169,24 @@ export const getAnimalRegistration = () => dispatch => {
         )
 }
 
-export const getExcelData = () => dispatch => {
-    axios.get('/api/dashboardExcel/show')
+export const getExcelData = data => dispatch => {
+    axios.get(`/api/dashboardExcel/show/${data.skip}/${data.limit}`)
         .then(res => {
             console.log("dispatched", res.data)
-            dispatch({
-                type: DASHBOARD_EXCEL,
-                payload: res.data,
-            })
+            if (res.data.length === 0) {
+                console.log("stopped")
+                dispatch({
+                    type: STOP_DASHBOARD_EXCEL,
+                    payload: res.data,
+                })
+            } else {
+                console.log("received")
+                dispatch({
+                    type: DASHBOARD_EXCEL,
+                    payload: res.data,
+                })
+            }
+
         })
         .catch(err =>
             dispatch({

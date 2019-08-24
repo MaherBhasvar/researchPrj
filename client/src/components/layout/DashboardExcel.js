@@ -5,23 +5,88 @@ import { getAnimalRegistration, getExcelData } from '../../actions/submitActions
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
+import BottomScrollListener from 'react-bottom-scroll-listener'
+import Spinner from '../common/Spinner'
+
 class DashboardExcel extends Component {
 
     state = {
         userList: [],
+        skip: 0,
+        limit: 100,
         errors: {}
     }
 
     componentDidMount() {
-        this.props.getExcelData()
+        window.addEventListener("scroll", this.handleScroll);
+        var data = {
+            skip: this.state.skip,
+            limit: this.state.limit,
+        }
+        this.props.getExcelData(data)
+
+        // for (var i = 0; i < 60; i++) {
+        //     this.setState(prevState => {
+        //         console.log("Bottom")
+        //         console.log(this.state.skip)
+        //         var data = {
+        //             skip: prevState.skip,
+        //             limit: this.state.limit,
+        //         }
+        //         this.props.getExcelData(data)
+
+        //         return {
+        //             ...prevState,
+        //             skip: prevState.skip + this.state.limit,
+        //         }
+        //     })
+        // }
     }
+
+    // handleScroll = (e) => {
+    //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    //     if (bottom) {
+    //         console.log("bottom reached")
+    //     }
+    //     console.log("onScroll")
+    // }
+
+    handleScroll = () => {
+        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const windowBottom = windowHeight + window.pageYOffset;
+        if (windowBottom >= docHeight && !this.props.dashboard.stop) {
+            this.setState(prevState => {
+                console.log("Bottom")
+                console.log(this.state.skip)
+                var data = {
+                    skip: prevState.skip + this.state.limit,
+                    limit: this.state.limit,
+                }
+                this.props.getExcelData(data)
+
+                return {
+                    ...prevState,
+                    skip: prevState.skip + this.state.limit,
+                }
+            })
+
+        } else {
+            console.log("Not Bottom")
+        }
+    }
+
 
     render() {
 
-        const data = this.props.dashboard.excelData
-        var displayData = null
 
-        if (data) {
+        const dashboard = this.props.dashboard
+        var displayData = null
+        console.log(dashboard)
+        if (dashboard.excelData !== []) {
+            const data = this.props.dashboard.excelData
             displayData = (
                 <tbody>
                     {
@@ -84,7 +149,7 @@ class DashboardExcel extends Component {
         }
         console.log("renderer", this.props.dashboard)
         return (
-            <div className="animated fadeIn">
+            <div className="animated fadeIn" onScroll={this.handleScroll}>
                 <Row>
                     <Col >
                         <Card>
@@ -134,10 +199,13 @@ class DashboardExcel extends Component {
                                     {displayData}
 
                                 </Table>
+                                {this.props.dashboard.stop ? (<span>---No More Data to Load---</span>) : <Spinner />}
                             </CardBody>
                         </Card>
                     </Col>
                 </Row>
+
+
 
             </div>
         );
