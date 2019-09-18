@@ -5,15 +5,17 @@ import { getAnimalRegistration, getExcelData } from '../../actions/submitActions
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
-import BottomScrollListener from 'react-bottom-scroll-listener'
 import Spinner from '../common/Spinner'
+import UpdateModal from '../modals/UpdateModal';
 
 class DashboardExcel extends Component {
 
     state = {
+        displayModal: false,
+        selectedUserForUpdate: null,
         userList: [],
         skip: 0,
-        limit: 100,
+        limit: 10,
         errors: {}
     }
 
@@ -78,8 +80,22 @@ class DashboardExcel extends Component {
         }
     }
 
+    updateRecord = (e, user) => {
+        e.preventDefault();
+
+        if (this.state.displayModal === false) {
+            this.setState({ displayModal: true, selectedUserForUpdate: user })
+        }
+        if (this.state.displayModal === true) {
+            this.setState({ displayModal: false, selectedUserForUpdate: null })
+        }
+        console.log(user);
+
+    }
+
 
     render() {
+
 
 
         const dashboard = this.props.dashboard
@@ -92,6 +108,8 @@ class DashboardExcel extends Component {
                     {
                         data.map((user, index) =>
                             <tr key={user._id} user={user}>
+
+                                <td> <button onClick={(e) => this.updateRecord(e, user)}>Update</button> </td>
 
                                 <td >{user.SrNo}</td>
                                 <td >{user.DateOfEntry}</td>
@@ -150,6 +168,16 @@ class DashboardExcel extends Component {
         console.log("renderer", this.props.dashboard)
         return (
             <div className="animated fadeIn" onScroll={this.handleScroll}>
+                {
+                    this.state.displayModal ?
+                        <UpdateModal
+                            data={displayData}
+                            modal={this.state.displayModal}
+                            updateRecord={(e) => this.updateRecord(e, null)}
+                            selectedUserForUpdate={this.state.selectedUserForUpdate}
+                        /> :
+                        null
+                }
                 <Row>
                     <Col >
                         <Card>
@@ -160,6 +188,7 @@ class DashboardExcel extends Component {
                                 <Table responsive hover>
                                     <thead>
                                         <tr>
+                                            <th scope="col">Update</th>
                                             <th scope="col">Sr No</th>
                                             <th scope="col">Date Of Entry</th>
                                             <th scope="col">Centre</th>
@@ -204,7 +233,6 @@ class DashboardExcel extends Component {
                         </Card>
                     </Col>
                 </Row>
-
 
 
             </div>
