@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import 'material-design-icons/iconfont/material-icons.css';
-import { Nav, NavItem, NavLink, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+
 class Rectangle extends Component {
 
     render() {

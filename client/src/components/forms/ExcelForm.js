@@ -216,7 +216,7 @@ class ExcelForm extends Component {
             ReceiptNumber: this.state.ReceiptNumber,
             RegistrationCharges: this.state.RegistrationCharges,
         };
-        this.props.excelFormSubmit(userData, this.props.history);
+        //this.props.excelFormSubmit(userData, this.props.history);
 
     }
 
@@ -240,9 +240,9 @@ class ExcelForm extends Component {
                                         placeholder=""
                                         name="DateOfEntry"
                                         type="date"
-                                        value={this.state.Centre}
+                                        value={this.state.DateOfEntry}
                                         onChange={e => this.onChange(e)}
-                                        error={errors.Centre}
+                                        error={errors.DateOfEntry}
                                     />
                                     <TextFieldGroup
                                         //disabled={this.props.submit.disableAnimalRegistration}

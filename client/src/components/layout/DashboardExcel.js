@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
 import { getAnimalRegistration, getExcelData } from '../../actions/submitActions';
+import { updateAllRecords } from '../../actions/updateActions'
+
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -26,32 +29,7 @@ class DashboardExcel extends Component {
             limit: this.state.limit,
         }
         this.props.getExcelData(data)
-
-        // for (var i = 0; i < 60; i++) {
-        //     this.setState(prevState => {
-        //         console.log("Bottom")
-        //         console.log(this.state.skip)
-        //         var data = {
-        //             skip: prevState.skip,
-        //             limit: this.state.limit,
-        //         }
-        //         this.props.getExcelData(data)
-
-        //         return {
-        //             ...prevState,
-        //             skip: prevState.skip + this.state.limit,
-        //         }
-        //     })
-        // }
     }
-
-    // handleScroll = (e) => {
-    //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    //     if (bottom) {
-    //         console.log("bottom reached")
-    //     }
-    //     console.log("onScroll")
-    // }
 
     handleScroll = () => {
         const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
@@ -178,6 +156,16 @@ class DashboardExcel extends Component {
                         /> :
                         null
                 }
+                <button onClick={e => {
+                    e.preventDefault();
+                    var data = {
+                        date: new Date(Date.now() + 19800000),
+                    }
+                    this.props.updateAllRecords(data);
+                    console.log("update All Records called");
+                }}>
+                    Update All
+                </button>
                 <Row>
                     <Col >
                         <Card>
@@ -245,6 +233,7 @@ class DashboardExcel extends Component {
 DashboardExcel.propTypes = {
     getAnimalRegistration: PropTypes.func.isRequired,
     getExcelData: PropTypes.func.isRequired,
+    updateAllRecords: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
@@ -253,6 +242,6 @@ const mapStateToProps = state => ({
     dashboard: state.dashboard,
 });
 
-export default connect(mapStateToProps, { getAnimalRegistration, getExcelData, })(
+export default connect(mapStateToProps, { getAnimalRegistration, getExcelData, updateAllRecords })(
     DashboardExcel
 );

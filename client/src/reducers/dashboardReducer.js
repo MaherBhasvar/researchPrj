@@ -1,8 +1,9 @@
-import { DASHBOARD_EXCEL, STOP_DASHBOARD_EXCEL } from '../actions/types';
+import { DASHBOARD_EXCEL, STOP_DASHBOARD_EXCEL, UPDATE_RECORDS } from '../actions/types';
 import { stat } from 'fs';
 
 const initialState = {
     excelData: [],
+    updated: null,
     stop: false
 }
 
@@ -22,6 +23,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 stop: true
+            }
+        case UPDATE_RECORDS:
+            return {
+                ...state,
+                updated: true
             }
         default:
             return state;
